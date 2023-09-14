@@ -62,14 +62,13 @@ class GmailMboxMessage():
     return (content_type, encoding, msg_text)
 
 
-mbox_obj = mailbox.mbox('daily_love_letters.mbox')
-parsed_emails = [GmailMboxMessage(email_obj) for email_obj in mbox_obj]
-email_htmls = [
-    payload[2]
-    for email in parsed_emails
-    for payload in email.payload
-    if payload[0] == 'text/html' and payload[2] is not None
-]
-
-random_email = random.choice(email_htmls)
-print(random_email)
+def get_email_texts():
+  mbox_obj = mailbox.mbox('daily_love_letters.mbox')
+  parsed_emails = [GmailMboxMessage(email_obj) for email_obj in mbox_obj]
+  return [
+      payload[2]
+      for email in parsed_emails
+      for payload in email.payload
+      if payload[0] == 'text/html' and payload[2] is not None and
+      'Forwarded message' not in payload[2]
+  ]
