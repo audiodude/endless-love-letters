@@ -1,0 +1,55 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: none;
+}
+
+.container.index {
+  height: 100%;
+}
+
+.frame {
+  width: 60%;
+  background-color: lightyellow;
+  border: 1px solid #000;
+  position: relative;
+  margin: 4rem 0;
+}
+
+.heart {
+  display: inline-block;
+  font-size: 32px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+.heart::before {
+  content: '♡';
+}
+
+.heart.selected::before {
+  content: '❤️';
+}
+
+.letter {
+  margin: 4rem;
+}
+
+.favlink {
+  width: 50%;
+  margin: auto;
+  position: relative;
+  bottom: -24px;
+  text-align: center;
+}
