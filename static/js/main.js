@@ -1,18 +1,14 @@
 let data = [];
 
-async function loadData() {
-  if (data.length === 0) {
-    const response = await fetch('/static/data/letters.json');
-    data = await response.json();
-  }
-}
-
 async function fillLetter() {
   await loadData();
   id = Math.floor(Math.random() * data.length);
   const contents = data[id];
 
+  container = document.getElementsByClassName('container')[0];
+
   letterEl = document.getElementsByClassName('letter')[0];
+  letterEl.classList.add('loaded')
   letterEl.innerText = contents;
   heartEl = document.getElementsByClassName('heart')[0];
   heartEl.data = { letterId: id };
@@ -21,6 +17,7 @@ async function fillLetter() {
   if (curIds.indexOf(id) !== -1) {
     heartEl.classList.add('selected');
   }
+  container.classList.add('visible')
 }
 
 function getFavoriteIds() {
@@ -35,7 +32,7 @@ function addFavorite(id) {
   curIds = getFavoriteIds() || [];
   curIds.push(id);
   console.log(curIds);
-  document.cookie = 'favorites=' + JSON.stringify(curIds);
+  document.cookie = 'favorites=' + JSON.stringify(curIds) + ';path=/v1/';
 }
 
 function removeFavorite(id) {
@@ -44,7 +41,7 @@ function removeFavorite(id) {
   console.log(curIds, id, idx);
   if (idx !== -1) {
     curIds.splice(idx, 1);
-    document.cookie = 'favorites=' + JSON.stringify(curIds);
+    document.cookie = 'favorites=' + JSON.stringify(curIds) + ';path=/v1/';
   }
 }
 
@@ -65,6 +62,16 @@ async function printFavorites() {
     frame.appendChild(letter);
     containerEl.append(frame);
   }
+  if (curIds.length == 0) {
+    const frame = document.createElement('div');
+    frame.classList.add('frame');
+    const letter = document.createElement('div');
+    letter.classList.add('letter');
+    letter.innerHTML = '<h2 style="text-align:center">No favorites</h2>';
+    frame.appendChild(letter);
+    containerEl.append(frame);
+  }
+  containerEl.classList.add('visible')
 }
 
 async function addHeartListeners() {
