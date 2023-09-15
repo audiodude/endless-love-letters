@@ -1,3 +1,12 @@
+const COOKIE_PATH = ';path=/v1';
+
+async function loadData() {
+  if (data.length === 0) {
+    const response = await fetch('/static/data/letters.json');
+    data = await response.json();
+  }
+}
+
 let data = [];
 
 async function fillLetter() {
@@ -8,7 +17,6 @@ async function fillLetter() {
   container = document.getElementsByClassName('container')[0];
 
   letterEl = document.getElementsByClassName('letter')[0];
-  letterEl.classList.add('loaded')
   letterEl.innerText = contents;
   heartEl = document.getElementsByClassName('heart')[0];
   heartEl.data = { letterId: id };
@@ -29,26 +37,24 @@ function getFavoriteIds() {
 }
 
 function addFavorite(id) {
-  curIds = getFavoriteIds() || [];
+  const curIds = getFavoriteIds() || [];
   curIds.push(id);
-  console.log(curIds);
-  document.cookie = 'favorites=' + JSON.stringify(curIds) + ';path=/v1/';
+  document.cookie = 'favorites=' + JSON.stringify(curIds) + COOKIE_PATH;
 }
 
 function removeFavorite(id) {
-  curIds = getFavoriteIds() || [];
+  const curIds = getFavoriteIds() || [];
   idx = curIds.indexOf(id);
-  console.log(curIds, id, idx);
   if (idx !== -1) {
     curIds.splice(idx, 1);
-    document.cookie = 'favorites=' + JSON.stringify(curIds) + ';path=/v1/';
+    document.cookie = 'favorites=' + JSON.stringify(curIds) + COOKIE_PATH;
   }
 }
 
 async function printFavorites() {
   await loadData();
-  containerEl = document.getElementsByClassName('container')[0];
-  curIds = getFavoriteIds() || [];
+  const containerEl = document.getElementsByClassName('container')[0];
+  const curIds = getFavoriteIds() || [];
   for (let i = 0; i < curIds.length; i++) {
     const frame = document.createElement('div');
     frame.classList.add('frame');
@@ -76,12 +82,11 @@ async function printFavorites() {
 
 async function addHeartListeners() {
   if (FAVORITES) {
-    console.log('Printing favorites...');
     await printFavorites();
   }
-  hearts = document.getElementsByClassName('heart');
+  const hearts = document.getElementsByClassName('heart');
   for (let i = 0; i < hearts.length; i++) {
-    heart = hearts[i];
+    const heart = hearts[i];
     heart.addEventListener('click', function () {
       this.classList.toggle('selected');
       if (this.classList.contains('selected')) {

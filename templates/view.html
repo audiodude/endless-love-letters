@@ -11,14 +11,13 @@
       <div class="frame">
         <span class="heart"></span>
         <div class="letter"></div>
-        <div class="favlink"><a href='/v1/favorites'>favorites</a></div>
+        <div class="favlink"><a href='{{ favorites_path }}'>favorites</a></div>
       </div>
     </div>
     <script>
       const FAVORITES = false;
     </script>
-    <script src="/static/js/v1_fetch.js"></script>
-    <script src="/static/js/main.js"></script>
+    <script src="/static/js/{{ main_path }}"></script>
     <script>
       fillLetter();
     </script>
