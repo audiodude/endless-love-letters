@@ -28,3 +28,20 @@ def favorites(version):
 def generate_letter():
   letter = generate()
   return flask.jsonify({'letter': letter})
+
+
+@app.route('/api/favorite', methods=['POST'])
+def favorite():
+  data = flask.request.get_json()
+  if 'letter' not in data:
+    flask.abort(400)
+  return flask.jsonify({'id': 1})
+
+
+@app.route('/api/unfavorite', methods=['POST'])
+def unfavorite():
+  data = flask.request.get_json()
+  if 'id' not in data:
+    flask.abort(400)
+  print(data['id'])
+  return ('', 204)

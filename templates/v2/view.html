@@ -11,12 +11,40 @@
       createApp({
         $delimiters: ['${', '}'],
         letter: '',
+        favoriteId: null,
 
         async fetchData() {
           const response = await fetch('/api/generate');
           const data = await response.json();
           console.log(data);
           this.letter = data.letter;
+        },
+
+        async toggleFavorite() {
+          if (!!this.favoriteId) {
+            return this.removeFavorite();
+          } else {
+            return this.addFavorite();
+          }
+        },
+
+        async addFavorite() {
+          const response = await fetch('api/favorite', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({letter: this.letter}),
+          });
+          const data = await response.json();
+          this.favoriteId = data.id;
+        },
+
+        async removeFavorite() {
+          await fetch('api/unfavorite', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: this.favoriteId}),
+          });
+          this.favoriteId = null;
         }
       }).mount();
     </script>
@@ -24,7 +52,7 @@
   <body>
     <div class="container visible index" v-scope v-effect="fetchData()">
       <div class="frame">
-        <span class="heart"></span>
+        <span class="heart" :class="{selected: !!favoriteId, hidden: !letter}" @click="toggleFavorite()"></span>
         <div v-if="letter" class="letter"><pre>${ letter }</pre></div>
         <div class="spinner-cont" v-else><img alt="spinner" height=200 width=200 src="/static/img/spinner.svg"/></div>
         <div class="favlink"><a href='/v2/favorites'>favorites</a></div>

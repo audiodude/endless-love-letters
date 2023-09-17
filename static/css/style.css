@@ -61,12 +61,15 @@ body {
   height: 32px;
 }
 
+.heart.hidden {
+  display: none;
+}
+
 .heart::before {
   content: '♡';
 }
 
 .heart.selected::before {
-  font-size: .95rem;
   content: '❤️';
 }
 
