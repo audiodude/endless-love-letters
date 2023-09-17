@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Infinite Love Letters</title>
     <link rel="stylesheet" href="/static/css/style.css" />
-    <script src="https://unpkg.com/petite-vue" defer init></script>
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/petite-vue?module';
+
+      createApp({
+        $delimiters: ['${', '}'],
+        letter: '',
+
+        async fetchData() {
+          const response = await fetch('/api/generate');
+          const data = await response.json();
+          console.log(data);
+          this.letter = data.letter;
+        }
+      }).mount();
+    </script>
   </head>
   <body>
-    <div class="container index">
+    <div class="container index" :class="{'visible': !!letter}" v-scope v-effect="fetchData()">
       <div class="frame">
         <span class="heart"></span>
-        <div class="letter"></div>
+        <div class="letter">${ letter }</div>
         <div class="favlink"><a href='/v2/favorites'>favorites</a></div>
       </div>
     </div>
-    <script>
-      const FAVORITES = false;
-    </script>
-    <script src="/static/js/v2_main.js"></script>
-    <script>
-      fillLetter();
-    </script>
   </body>
 </html>
