@@ -10,13 +10,13 @@ def index():
 def view(version):
   if version not in ('v1', 'v2'):
     flask.abort(404)
-  return flask.render_template('view.html', main_path=f'{version}_main.js', favorites_path=f'/{version}/favorites')
+  return flask.render_template(f'{version}/view.html')
 
 @app.route('/<version>/favorites')
 def favorites(version):
   if version not in ('v1', 'v2'):
     flask.abort(404)
-  return flask.render_template('favorites.html', main_path=f'{version}_main.js')
+  return flask.render_template(f'{version}/favorites.html')
 
 @app.route('/api/generate')
 def generate_letter():

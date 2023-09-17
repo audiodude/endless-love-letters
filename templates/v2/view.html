@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Infinite Love Letters</title>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://unpkg.com/petite-vue" defer init></script>
   </head>
   <body>
     <div class="container index">
       <div class="frame">
         <span class="heart"></span>
         <div class="letter"></div>
-        <div class="favlink"><a href='{{ favorites_path }}'>favorites</a></div>
+        <div class="favlink"><a href='/v2/favorites'>favorites</a></div>
       </div>
     </div>
     <script>
       const FAVORITES = false;
     </script>
-    <script src="/static/js/{{ main_path }}"></script>
+    <script src="/static/js/v2_main.js"></script>
     <script>
       fillLetter();
     </script>
