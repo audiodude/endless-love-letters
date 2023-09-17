@@ -22,10 +22,11 @@
     </script>
   </head>
   <body>
-    <div class="container index" :class="{'visible': !!letter}" v-scope v-effect="fetchData()">
+    <div class="container visible index" v-scope v-effect="fetchData()">
       <div class="frame">
         <span class="heart"></span>
-        <div class="letter">${ letter }</div>
+        <div v-if="letter" class="letter"><pre>${ letter }</pre></div>
+        <div class="spinner-cont" v-else><img alt="spinner" height=200 width=200 src="/static/img/spinner.svg"/></div>
         <div class="favlink"><a href='/v2/favorites'>favorites</a></div>
       </div>
     </div>

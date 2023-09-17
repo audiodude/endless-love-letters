@@ -38,6 +38,10 @@ body {
   text-decoration: underline;
 }
 
+.spinner-cont {
+  text-align: center;
+}
+
 .frame {
   width: 60%;
   background-color: #edc0c8;
@@ -68,6 +72,11 @@ body {
 
 .letter {
   margin: 4rem;
+}
+
+.letter pre {
+  white-space: pre-wrap;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .favlink {

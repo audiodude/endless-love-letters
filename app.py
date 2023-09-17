@@ -1,5 +1,7 @@
 import flask
 
+from generate import generate
+
 app = flask.Flask(__name__)
 
 
@@ -24,4 +26,5 @@ def favorites(version):
 
 @app.route('/api/generate')
 def generate_letter():
-  return flask.jsonify({'letter': 'Foo test letter'})
+  letter = generate()
+  return flask.jsonify({'letter': letter})
