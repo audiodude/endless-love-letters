@@ -2,9 +2,11 @@ import os
 
 import pymysql
 
+from get_secrets import get_secret
+
 CREDS = {}
 for key in ('user', 'password', 'host', 'port', 'db'):
-  CREDS[key] = os.environ.get(f'MYSQL_{key.upper()}')
+  CREDS[key] = get_secret(f'MYSQL_{key.upper()}')
 CREDS = dict((key, value) for key, value in CREDS.items() if value is not None)
 
 

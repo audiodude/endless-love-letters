@@ -5,10 +5,11 @@ from flask_session import Session
 
 import db
 from generate import generate
+from get_secrets import secret
 
 app = flask.Flask(__name__)
 Session(app)
-app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
+app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
 
 
 @app.route('/')

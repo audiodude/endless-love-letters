@@ -1,0 +1,7 @@
+# flyctl launch added from .gitignore
+**/__pycache__
+**/venv
+# Find this in the Google takeout
+**/daily_love_letters.mbox
+**/finetune.jsonl
+fly.toml

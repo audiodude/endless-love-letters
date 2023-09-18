@@ -4,7 +4,9 @@ import sys
 
 import requests
 
-OPENAPI_TOKEN = os.getenv('OPENAPI_TOKEN')
+from get_secrets import secret
+
+OPENAPI_TOKEN = secret('OPENAPI_TOKEN')
 
 
 def generate():
@@ -24,12 +26,15 @@ def generate():
       'stop': 'Love Forever,\n-Travis',
   }
 
-  r = requests.post('https://api.openai.com/v1/chat/completions', headers={'Authorization': 'Bearer %s' % OPENAPI_TOKEN}, json=data)
+  r = requests.post('https://api.openai.com/v1/chat/completions',
+                    headers={'Authorization': 'Bearer %s' % OPENAPI_TOKEN},
+                    json=data)
   output = r.json()
   try:
     return output['choices'][0]['message']['content'] + 'Love Forever,\n-Travis'
   except KeyError:
     print(output)
+
 
 if __name__ == '__main__':
   letter = generate()
