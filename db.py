@@ -33,3 +33,11 @@ def delete_favorite(conn, favorite_id, user_id):
                    (favorite_id, user_id))
     conn.commit()
     return cursor.lastrowid
+
+
+def get_favorites(conn, user_id):
+  with conn.cursor() as cursor:
+    cursor.execute(
+        'SELECT id, content FROM favorites WHERE user_id = %s '
+        'ORDER BY id DESC', user_id)
+    return [{'id': row[0], 'content': row[1]} for row in cursor.fetchall()]

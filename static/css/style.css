@@ -19,6 +19,10 @@ body {
   justify-content: space-around;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .link-cont {
   padding: 2rem;
   margin: 2rem auto;

@@ -28,7 +28,7 @@
         },
 
         async addFavorite() {
-          const response = await fetch('api/favorite', {
+          const response = await fetch('/api/favorite', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ letter: this.letter }),
@@ -38,7 +38,7 @@
         },
 
         async removeFavorite() {
-          await fetch('api/unfavorite', {
+          await fetch('/api/unfavorite', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: this.favoriteId }),
@@ -49,7 +49,7 @@
     </script>
   </head>
   <body>
-    <div class="container visible index" v-scope v-effect="fetchData()">
+    <div class="container visible index" v-cloak v-scope v-effect="fetchData()">
       <div class="frame">
         <span
           class="heart"

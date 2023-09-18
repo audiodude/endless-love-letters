@@ -71,3 +71,14 @@ def unfavorite():
   db.delete_favorite(conn, data['id'], flask.session['user_id'])
 
   return ('', 204)
+
+
+@app.route('/api/favorites')
+def get_favorites():
+  user_id = flask.session.get('user_id')
+  if user_id is None:
+    return flask.jsonify({'favorites': []})
+
+  conn = db.connect()
+  favorites = db.get_favorites(conn, user_id)
+  return flask.jsonify({'favorites': favorites})
