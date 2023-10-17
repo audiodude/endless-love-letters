@@ -16,7 +16,7 @@ def generate():
           'role':
               'system',
           'content':
-              'You are an assistant that writes whort, sweet love letters from Travis to Abby'
+              'You are an assistant that writes short, sweet love letters from Travis to Abby'
       }, {
           'role':
               'user',
