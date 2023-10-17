@@ -29,10 +29,6 @@ def generate():
   r = requests.post('https://api.openai.com/v1/chat/completions',
                     headers={'Authorization': 'Bearer %s' % OPENAPI_TOKEN},
                     json=data)
-  if not r.ok:
-    print(r.text)
-    return
-
   output = r.json()
   try:
     return output['choices'][0]['message']['content'] + 'Love Forever,\n-Travis'
