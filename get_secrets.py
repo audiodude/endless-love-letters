@@ -13,5 +13,5 @@ def secret(name):
 def get_secret(name):
   val = os.environ.get(name)
   if name == 'MYSQL_PORT':
-    return int(val)
+    return val and int(val)
   return val
