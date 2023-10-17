@@ -5,3 +5,4 @@ daily_love_letters.mbox
 finetune.jsonl
 SECRETS.dev
 SECRETS
+.env

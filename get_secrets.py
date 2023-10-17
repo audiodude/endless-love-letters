@@ -1,21 +1,17 @@
-import json
 import os
 
-secret_data = {}
+import dotenv
 
 
-def load_secrets():
-  global secret_data
-  with open('./SECRETS') as f:
-    secret_data = json.load(f)
+dotenv.load_dotenv()
 
 
 def secret(name):
-  return secret_data[name]
+  return os.environ[name]
 
 
 def get_secret(name):
-  return secret_data.get(name)
-
-
-load_secrets()
+  val = os.environ.get(name)
+  if name == 'MYSQL_PORT':
+    return int(val)
+  return val
