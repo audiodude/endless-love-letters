@@ -1,9 +1,10 @@
-FROM python:3.11.5-bookworm
-
+FROM python:3.12
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir pipenv
+COPY ./Pipfile Pipfile
+COPY ./Pipfile.lock Pipfile.lock
+RUN pipenv install --system --deploy --ignore-pipfile
 
 COPY . .
 
