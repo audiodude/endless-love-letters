@@ -9,6 +9,7 @@ flask-session2 = "*"
 pymysql = "*"
 python-dotenv = "*"
 requests = "*"
+gunicorn = "*"
 
 [dev-packages]
 
