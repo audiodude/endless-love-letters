@@ -12,6 +12,7 @@ requests = "*"
 gunicorn = "*"
 
 [dev-packages]
+djlint = "*"
 
 [requires]
 python_version = "3.12"

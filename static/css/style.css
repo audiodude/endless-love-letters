@@ -47,16 +47,32 @@ body {
 }
 
 .spinner-cont {
+  margin-top: 5rem;
   text-align: center;
 }
 
-.frame {
+.inner-container {
   width: 60%;
+}
+
+.prompt {
+  font-size: 2rem;
+  line-height: 3rem;
+}
+
+.frame {
   background-color: #edc0c8;
   border: 1px solid #000;
   font-size: 1.2rem;
   position: relative;
   margin: 4rem 0;
+  min-height: 24rem;
+}
+
+.frame.v1,
+.frame.favorites {
+  width: 60%;
+  min-height: auto;
 }
 
 .heart {
@@ -93,7 +109,20 @@ body {
 .favlink {
   width: 50%;
   margin: auto;
-  position: relative;
-  bottom: -24px;
+  position: absolute;
+  bottom: 24px;
+  left: 25%;
   text-align: center;
+}
+
+select {
+  appearance: none;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #edc0c8;
+  padding: 0 .2rem;
+}
+
+button {
+  font-size: 1.5rem;
 }

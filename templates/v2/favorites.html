@@ -69,7 +69,7 @@
           />
         </div>
       </div>
-      <div class="frame" v-for="favorite of favorites">
+      <div class="frame favorites" v-for="favorite of favorites">
         <span
           class="heart"
           :class="{selected: isFavorite(favorite.id)}"

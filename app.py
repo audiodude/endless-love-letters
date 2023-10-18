@@ -21,7 +21,13 @@ def index():
 def view(version):
   if version not in ('v1', 'v2'):
     flask.abort(404)
-  return flask.render_template(f'{version}/view.html')
+  if version == 'v2':
+    adj = flask.request.args.get('adj')
+    extra = flask.request.args.get('extra')
+    letter = generate(adj=adj, extra=extra)
+    return flask.render_template(f'v2/view.html', letter=letter)
+
+  return flask.render_template(f'v1/view.html')
 
 
 @app.route('/<version>/favorites')

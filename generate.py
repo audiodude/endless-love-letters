@@ -9,7 +9,14 @@ from get_secrets import secret
 OPENAPI_TOKEN = secret('OPENAPI_TOKEN')
 
 
-def generate():
+def build_content(adj=None, extra=None):
+  adj = adj + ' ' if adj else ''
+  extra = extra + ', ' if extra else ''
+  return f'Write me a {adj}love letter from Travis, {extra}that he can send to his wife Abby'
+
+
+def generate(content=None, adj=None, extra=None):
+  content = content or build_content(adj=adj, extra=extra)
   data = {
       'model': 'ft:gpt-3.5-turbo-0613:personal::7ybccOXf',
       'messages': [{
@@ -18,10 +25,8 @@ def generate():
           'content':
               'You are an assistant that writes short, sweet love letters from Travis to Abby'
       }, {
-          'role':
-              'user',
-          'content':
-              'Write me a love letter from myself, Travis, that I can send to my wife Abby'
+          'role': 'user',
+          'content': f'{content}'
       }],
       'stop': 'Love Forever,\n-Travis',
   }

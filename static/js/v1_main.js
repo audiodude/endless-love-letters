@@ -25,7 +25,7 @@ async function fillLetter() {
   if (curIds.indexOf(id) !== -1) {
     heartEl.classList.add('selected');
   }
-  container.classList.add('visible')
+  container.classList.add('visible');
 }
 
 function getFavoriteIds() {
@@ -57,7 +57,7 @@ async function printFavorites() {
   const curIds = getFavoriteIds() || [];
   for (let i = 0; i < curIds.length; i++) {
     const frame = document.createElement('div');
-    frame.classList.add('frame');
+    frame.classList.add('frame', 'v1');
     const heart = document.createElement('span');
     heart.classList.add('heart', 'selected');
     heart.data = { letterId: curIds[i] };
@@ -70,14 +70,14 @@ async function printFavorites() {
   }
   if (curIds.length == 0) {
     const frame = document.createElement('div');
-    frame.classList.add('frame');
+    frame.classList.add('frame', 'v1');
     const letter = document.createElement('div');
     letter.classList.add('letter');
     letter.innerHTML = '<h2 style="text-align:center">No favorites</h2>';
     frame.appendChild(letter);
     containerEl.append(frame);
   }
-  containerEl.classList.add('visible')
+  containerEl.classList.add('visible');
 }
 
 async function addHeartListeners() {
