@@ -10,7 +10,7 @@
 
       createApp({
         $delimiters: ['${', '}'],
-        letter: '',
+        letter: null,
         favoriteId: null,
 
         async fetchData() {
@@ -57,7 +57,7 @@
           @click="toggleFavorite()"
         ></span>
         <div v-if="letter" class="letter"><pre>${ letter }</pre></div>
-        <div class="spinner-cont" v-else>
+        <div v-else class="spinner-cont">
           <img
             alt="spinner"
             height="200"
