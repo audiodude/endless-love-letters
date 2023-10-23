@@ -1,7 +1,7 @@
 html,
 body {
   margin: 0;
-  height: 100%;
+  min-height: 100%;
 }
 
 [vcloak] {
@@ -53,6 +53,12 @@ body {
 
 .inner-container {
   width: 60%;
+}
+
+@media(max-width: 820px) {
+  .inner-container{
+    width: 95%;
+  }
 }
 
 .prompt {
