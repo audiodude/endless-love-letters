@@ -45,7 +45,7 @@ mysql -u <user> -p endless_love_letters < schema.sql
 ## Running the web app locally
 
 ```bash
-FLASK_DEBUG=1 FLASK_APP=app flask run
+FLASK_DEBUG=1 FLASK_APP=app pipenv run flask run
 ```
 
 ## Deploying to fly,io
