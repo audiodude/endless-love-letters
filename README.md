@@ -51,7 +51,6 @@ FLASK_DEBUG=1 FLASK_APP=app flask run
 ## Deploying to fly,io
 
 1. Install the Fly.io command line tool, `flyctl`
-2. Update the SECRETS file to contain the production values. Then:
 
 ```bash
 fly deploy
