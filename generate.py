@@ -12,13 +12,13 @@ OPENAPI_TOKEN = secret('OPENAPI_TOKEN')
 def build_content(adj=None, extra=None):
   adj = adj + ' ' if adj else ''
   extra = extra + ', ' if extra else ''
-  return f'Write me a {adj}love letter from Travis, {extra}that he can send to his wife Abby'
+  return f'Write me a {adj}love letter from myself, Travis, {extra}that I can send to my wife Abby'
 
 
 def generate(content=None, adj=None, extra=None):
   content = content or build_content(adj=adj, extra=extra)
   data = {
-      'model': 'ft:gpt-3.5-turbo-0613:personal::7ybccOXf',
+      'model': 'ft:gpt-3.5-turbo-0613:personal::9bj6wDbN',
       'messages': [{
           'role':
               'system',

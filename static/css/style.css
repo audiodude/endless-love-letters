@@ -64,6 +64,7 @@ body {
 .prompt {
   font-size: 2rem;
   line-height: 3rem;
+  margin-top: 1rem;
 }
 
 .frame {
@@ -127,6 +128,7 @@ select {
   text-align: center;
   background-color: #edc0c8;
   padding: 0 .2rem;
+  border-radius: .5rem;
 }
 
 button {
