@@ -1,3 +1,5 @@
+from functools import wraps
+import json
 import os
 
 import flask
@@ -12,9 +14,17 @@ Session(app)
 app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
 app.config['WEB_PASSWORD'] = secret('WEB_PASSWORD')
 
+DATABASE = {}
+with open('search_documents.jsonl') as f:
+  search_documents = [json.loads(doc) for doc in f.read().splitlines()]
+  for doc in search_documents:
+    print(repr(doc['id']))
+    DATABASE[doc['id']] = doc['letter']
+
 
 def require_auth(fn):
 
+  @wraps(fn)
   def wrapped(*args, **kwargs):
     if not flask.session.get('has_password'):
       return flask.redirect('/login')
@@ -123,3 +133,11 @@ def login():
     return flask.redirect('/search')
   else:
     return flask.render_template('login.html')
+
+
+@app.route('/doc/<id_>')
+@require_auth
+def doc(id_):
+  if id_ not in DATABASE:
+    flask.abort(404)
+  return flask.jsonify({'letter': DATABASE[id_]})

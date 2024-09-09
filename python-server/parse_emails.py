@@ -36,9 +36,9 @@ class GmailMboxMessage():
     match = RE_SUBJECT.match(subject)
     if match:
       if match.group(4):
-        return (int(match.group(1)), int(match.group(4)))
+        return (match.group(1), match.group(4))
       else:
-        return (int(match.group(1)), None)
+        return (match.group(1), None)
     return (None, None)
 
   def read_email_payload(self):
