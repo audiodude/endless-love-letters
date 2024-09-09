@@ -150,3 +150,11 @@ button {
 .password-error {
   color: red;
 }
+
+.search-input, .search-button {
+  font-size: 2rem;
+}
+
+.search-prompt {
+  text-align: center;
+}

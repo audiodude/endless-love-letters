@@ -10,6 +10,24 @@
     <title>Search</title>
   </head>
   <body>
-    <h1>Search</h1>
+    <div class="container visible index" v-cloak v-scope @vue:mounted="mounted">
+      <div class="inner-container">
+        <div class="prompt search-prompt">
+          <form>
+            <input class="search-input" type="term" />
+            <button class="search-button">Search</button>
+          </form>
+        </div>
+        <div class="frame">
+          <span
+            class="heart"
+            :class="{selected: !!favoriteId}"
+            @click="toggleFavorite()"
+          ></span>
+          <div id="letter" class="letter"><pre>{{ letter }}</pre></div>
+          <div class="favlink"><a href="/v2/favorites">favorites</a></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
