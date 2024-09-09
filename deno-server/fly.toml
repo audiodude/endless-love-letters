@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for endless-love-letters-search on 2024-09-08T21:52:50-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'endless-love-letters-search'
+primary_region = 'sjc'
+
+[build]
+
+[env]
+  PORT = '3000'
+
+[processes]
+  app = 'run --allow-read --allow-net --allow-env --node-modules-dir main.ts'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
