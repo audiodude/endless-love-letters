@@ -13,12 +13,12 @@ app = flask.Flask(__name__)
 Session(app)
 app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
 app.config['WEB_PASSWORD'] = secret('WEB_PASSWORD')
+app.config['SEARCH_SERVER_URL'] = secret('SEARCH_SERVER_URL')
 
 DATABASE = {}
 with open('search_documents.jsonl') as f:
   search_documents = [json.loads(doc) for doc in f.read().splitlines()]
   for doc in search_documents:
-    print(repr(doc['id']))
     DATABASE[doc['id']] = doc['letter']
 
 
@@ -117,7 +117,9 @@ def get_favorites():
 def search():
   for key in flask.session:
     print(f'{key}: {flask.session[key]}')
-  return flask.render_template('search.html')
+  return flask.render_template(
+      'search.html',
+      search_server_url=flask.current_app.config['SEARCH_SERVER_URL'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
