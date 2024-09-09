@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="login" />
+    <meta name="description" content="Login page for endless love letters" />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="password-form">
+      <h1 class="{{'password-error' if error else ''}}">
+        Please enter the password
+      </h1>
+      {% if error %}
+      <p class="password-error">Incorrect password</p>
+      {% endif %}
+      <form method="post">
+        <input type="password" name="password" class="password-input" />
+        <input type="submit" value="Submit" class="password-submit" />
+      </form>
+    </div>
+  </body>
+</html>

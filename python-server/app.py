@@ -10,6 +10,17 @@ from get_secrets import secret
 app = flask.Flask(__name__)
 Session(app)
 app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
+app.config['WEB_PASSWORD'] = secret('WEB_PASSWORD')
+
+
+def require_auth(fn):
+
+  def wrapped(*args, **kwargs):
+    if not flask.session.get('has_password'):
+      return flask.redirect('/login')
+    return fn(*args, **kwargs)
+
+  return wrapped
 
 
 @app.route('/')
@@ -89,3 +100,26 @@ def get_favorites():
   conn = db.connect()
   favorites = db.get_favorites(conn, user_id)
   return flask.jsonify({'favorites': favorites})
+
+
+@app.route('/search')
+@require_auth
+def search():
+  for key in flask.session:
+    print(f'{key}: {flask.session[key]}')
+  return flask.render_template('search.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  if flask.request.method == 'POST':
+    if flask.request.form.get(
+        'password') == flask.current_app.config['WEB_PASSWORD']:
+      flask.session['has_password'] = True
+      return flask.redirect('/search')
+    else:
+      return flask.render_template('login.html', error=True)
+  elif flask.session.get('has_password'):
+    return flask.redirect('/search')
+  else:
+    return flask.render_template('login.html')

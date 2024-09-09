@@ -134,3 +134,19 @@ select {
 button {
   font-size: 1.5rem;
 }
+
+.password-form {
+  margin-left: 1rem;
+}
+
+.password-input, .password-submit {
+  display: block;
+}
+
+.password-submit {
+  margin-top: 1rem;
+}
+
+.password-error {
+  color: red;
+}
