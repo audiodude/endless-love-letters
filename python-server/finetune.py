@@ -24,7 +24,7 @@ def prepare_input_messages(emails):
                   'Write me a love letter from myself, Travis, that I can send to my wife Abby'
           }, {
               'role': 'assistant',
-              'content': email,
+              'content': email[0],
           }]
       }) for email in emails
   ]
@@ -32,7 +32,7 @@ def prepare_input_messages(emails):
 
 def write_finetune_file():
   with open('finetune.jsonl', 'w') as f:
-    f.write('\n'.join(prepare_input_messages(parse_emails.get_email_texts())))
+    f.write('\n'.join(prepare_input_messages(parse_emails.get_emails())))
 
 
 def upload_fine_tune_file():

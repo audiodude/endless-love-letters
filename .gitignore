@@ -3,6 +3,7 @@ venv/
 # Find this in the Google takeout
 daily_love_letters.mbox
 finetune.jsonl
+search_documents.jsonl
 SECRETS.dev
 SECRETS
 .env

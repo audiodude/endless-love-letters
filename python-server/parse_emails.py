@@ -1,8 +1,11 @@
 import mailbox
 import random
 import quopri
+import re
 
 import bs4
+
+RE_SUBJECT = re.compile(r'Daily Love Letter #(\d+)( (&|and) #(\d+))?')
 
 
 def get_html_text(html):
@@ -25,7 +28,18 @@ class GmailMboxMessage():
     if not isinstance(email_data, mailbox.mboxMessage):
       raise TypeError('Variable must be type mailbox.mboxMessage')
     self.email_data = email_data
+    self.ids = self.parse_subject()
     self.payload = self.read_email_payload()
+
+  def parse_subject(self):
+    subject = self.email_data.get('Subject')
+    match = RE_SUBJECT.match(subject)
+    if match:
+      if match.group(4):
+        return (int(match.group(1)), int(match.group(4)))
+      else:
+        return (int(match.group(1)), None)
+    return (None, None)
 
   def read_email_payload(self):
     email_payload = self.email_data.get_payload()
@@ -62,13 +76,11 @@ class GmailMboxMessage():
     return (content_type, encoding, msg_text)
 
 
-def get_email_texts():
+def get_emails():
   mbox_obj = mailbox.mbox('daily_love_letters.mbox')
   parsed_emails = [GmailMboxMessage(email_obj) for email_obj in mbox_obj]
-  return [
-      payload[2]
-      for email in parsed_emails
-      for payload in email.payload
-      if payload[0] == 'text/html' and payload[2] is not None and
-      'Forwarded message' not in payload[2]
-  ]
+  return [(payload[2], email.ids)
+          for email in parsed_emails
+          for payload in email.payload
+          if payload[0] == 'text/html' and payload[2] is not None and
+          'Forwarded message' not in payload[2]]
