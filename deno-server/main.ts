@@ -1,5 +1,5 @@
 // @deno-types="npm:@types/express@4"
-import express, { Request, Response } from 'npm:express@4.19.2';
+import express, { Request, Response } from 'npm:express@4';
 
 const app = express();
 const port = Number(Deno.env.get('PORT')) || 3000;
