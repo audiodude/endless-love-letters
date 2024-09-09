@@ -5,27 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="keywords" content="login" />
     <meta name="description" content="Login page for endless love letters" />
+    <title>Search</title>
 
     <link rel="stylesheet" href="/static/css/style.css" />
-    <title>Search</title>
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/petite-vue?module';
+
+      const SEARCH_SERVER_URL = '{{ search_server_url }}';
+
+      createApp({
+        $delimiters: ['${', '}'],
+        favoriteId: null,
+        query: null,
+        letters: [],
+
+        async search() {
+          const response = await fetch(
+            `${SEARCH_SERVER_URL}/search?q=${this.query}`,
+          );
+          const data = await response.json();
+          this.letters = [];
+
+          data.forEach(async (results) => {
+            const docResp = await fetch('/doc/' + results.ref);
+            const docData = await docResp.json();
+            this.letters.push(docData.letter);
+            // TODO: Highlight search terms in the letter.
+          });
+        },
+
+        mounted() {
+          const urlParams = new URLSearchParams(window.location.search);
+          this.adj = urlParams.get('adj');
+          this.extra = urlParams.get('extra');
+        },
+      }).mount();
+    </script>
   </head>
   <body>
     <div class="container visible index" v-cloak v-scope @vue:mounted="mounted">
       <div class="inner-container">
         <div class="prompt search-prompt">
           <form>
-            <input class="search-input" type="term" />
-            <button class="search-button">Search</button>
+            <input v-model="query" class="search-input" type="term" />
+            <button @click.prevent="search()" class="search-button">
+              Search
+            </button>
           </form>
         </div>
-        <div class="frame">
-          <span
-            class="heart"
-            :class="{selected: !!favoriteId}"
-            @click="toggleFavorite()"
-          ></span>
-          <div id="letter" class="letter"><pre>{{ letter }}</pre></div>
-          <div class="favlink"><a href="/v2/favorites">favorites</a></div>
+        <div v-for="letter in letters" class="frame">
+          <div id="letter" class="letter"><pre>${ letter }</pre></div>
         </div>
       </div>
     </div>
