@@ -15,7 +15,7 @@ const port = Number(Deno.env.get('PORT')) || 3000;
  * Python 3.12.0 (main, Oct  3 2023, 17:47:52) [GCC 12.3.0] on linux
  * Type "help", "copyright", "credits" or "license" for more information.
  * >>> import documents
- * >>> documents.create_search_documents()
+ * >>> documents.create_search_output()
  * >>>
  */
 

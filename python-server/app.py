@@ -115,8 +115,6 @@ def get_favorites():
 @app.route('/search')
 @require_auth
 def search():
-  for key in flask.session:
-    print(f'{key}: {flask.session[key]}')
   return flask.render_template(
       'search.html',
       search_server_url=flask.current_app.config['SEARCH_SERVER_URL'])
