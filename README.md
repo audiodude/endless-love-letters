@@ -13,11 +13,11 @@ The web interface includes both v1 (static love letter list generated with some
 pre-GPT charNN-like solution whose name has been lost) and v2 (love letters
 generated on the fly with ChatGPT).
 
-## Populating the SECRETS file
+## Populating the .env file with secrets
 
-Look at `SECRETS.example` for the tokens which should go into `SECRETS`, which
-is a JSON file. Neither the site nor the command line tools will function
-without the `SECRETS` being set.
+The Python code uses [dotenv](https://github.com/theskumar/python-dotenv) to
+manage secrets. Look at .env.example for which values are required. Neither the
+site nor the command line tools will function without the secrets being set.
 
 ## Generating a love letter offline
 
