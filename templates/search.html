@@ -11,34 +11,18 @@
     <script type="module">
       import { createApp } from 'https://unpkg.com/petite-vue?module';
 
-      const SEARCH_SERVER_URL = '{{ search_server_url }}';
-
       createApp({
         $delimiters: ['${', '}'],
-        favoriteId: null,
         query: null,
         letters: [],
 
         async search() {
-          const response = await fetch(
-            `${SEARCH_SERVER_URL}/search?q=${this.query}`,
-          );
+          const response = await fetch(`/api/search?q=${encodeURIComponent(this.query)}`);
           const data = await response.json();
-          this.letters = [];
-
-          data.forEach(async (results) => {
-            const docResp = await fetch('/doc/' + results.ref);
-            const docData = await docResp.json();
-            this.letters.push(docData.letter);
-            // TODO: Highlight search terms in the letter.
-          });
+          this.letters = data.map((result) => result.letter);
         },
 
-        mounted() {
-          const urlParams = new URLSearchParams(window.location.search);
-          this.adj = urlParams.get('adj');
-          this.extra = urlParams.get('extra');
-        },
+        mounted() {},
       }).mount();
     </script>
   </head>

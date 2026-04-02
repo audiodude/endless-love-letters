@@ -14,7 +14,6 @@ app = flask.Flask(__name__)
 Session(app)
 app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
 app.config['WEB_PASSWORD'] = secret('WEB_PASSWORD')
-app.config['SEARCH_SERVER_URL'] = secret('SEARCH_SERVER_URL')
 
 DATABASE = {}
 with open('search_documents.jsonl') as f:
@@ -123,9 +122,19 @@ def get_favorites():
 @app.route('/search')
 @require_auth
 def search():
-  return flask.render_template(
-      'search.html',
-      search_server_url=flask.current_app.config['SEARCH_SERVER_URL'])
+  return flask.render_template('search.html')
+
+
+@app.route('/api/search')
+@require_auth
+def api_search():
+  q = flask.request.args.get('q', '').lower()
+  if not q:
+    return flask.jsonify([])
+  results = [{'ref': doc_id, 'letter': letter}
+             for doc_id, letter in DATABASE.items()
+             if q in letter.lower()]
+  return flask.jsonify(results)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -143,9 +152,3 @@ def login():
     return flask.render_template('login.html')
 
 
-@app.route('/doc/<id_>')
-@require_auth
-def doc(id_):
-  if id_ not in DATABASE:
-    flask.abort(404)
-  return flask.jsonify({'letter': DATABASE[id_]})

@@ -21,8 +21,8 @@ manage secrets. Look at .env.example for which values are required. Neither the
 site nor the command line tools will function without the secrets being set.
 
 The vibed letters feature requires `ANTHROPIC_API_KEY`. Copy
-`python-server/modifiers.json.example` to `python-server/modifiers.json` and
-customize the modifier descriptions to your liking.
+`modifiers.json.example` to `modifiers.json` and customize the modifier
+descriptions to your liking.
 
 ## Generating a love letter offline
 
@@ -70,8 +70,8 @@ mysql -u <user> -p endless_love_letters < schema.sql
 The complete love letter corpus is stored in `search_documents.jsonl`. This is a
 "JSON lines" formatted data file, with one object containing one love letter on
 each line. The file is "baked in" to the Python application server, and loaded
-directly into a Python dictionary at start up. It is also baked into the
-Javascript (Deno) application server, where it is used for full text search
+directly into a Python dictionary at start up, where it is used for full text
+search.
 
 The search service is protected by a single password (for privacy reasons) that
 is set using `WEB_PASSWORD` environment variable to the Python server.
@@ -80,8 +80,8 @@ is set using `WEB_PASSWORD` environment variable to the Python server.
 
 This file is mapped directly from the same process that processes the `.mbox`
 file for generating finetuning data. To generate it, put the
-`daily_love_letters.mbox` (retrieved from Google Takeout) in the python-server
-directory. Then start a Python shell and run the following commands:
+`daily_love_letters.mbox` (retrieved from Google Takeout) in the project root.
+Then start a Python shell and run the following commands:
 
 ```bash
 $ uv run python
@@ -94,22 +94,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 # Development
 
-## Running the search server locally
-
-The search server URL is specified in the Python environment as
-`SEARCH_SERVER_URL`. The Python Flask server connects to it on search requests.
-To run the sever, cd into the `deno-server` directory and run:
+## Running the web app locally
 
 ```bash
-deno run --allow-read --allow-env --allow-net main.ts
-```
-
-## Running the Python web app locally
-
-From the python-server directory:
-
-```bash
-cd python-server
 uv sync
 FLASK_DEBUG=1 uv run flask --app app run --port 8080
 ```
