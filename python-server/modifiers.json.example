@@ -1,0 +1,32 @@
+{
+  "adjectives": {
+    "sweet": "Make it sweet and tender — warm, heartfelt, the kind of letter that makes her feel deeply loved and cherished.",
+    "beautiful": "Make it beautiful and lyrical — use vivid imagery, elegant language, and paint a picture of your love like a work of art.",
+    "funny": "Make it funny — playful humor, inside-joke energy, the kind of letter that makes her laugh out loud while knowing how much you love her.",
+    "inappropriate": "Make it inappropriate — push boundaries, be risqué, the kind of thing that would make her blush and laugh at the same time.",
+    "long": "Make it long and expansive — don't hold back, let every thought and feeling pour out, give her a letter she can get lost in.",
+    "poetic": "Make it poetic — use meter, metaphor, and rich figurative language. It should read like a poem even if it's written as prose.",
+    "sexy": "Make it sexy and seductive — romantic tension, longing, desire. The kind of letter that makes her heart race.",
+    "detailed": "Make it detailed and specific — reference the small, concrete moments and things about her that you love. Specificity is intimacy.",
+    "old-timey": "Make it old-timey — write as if it were the 1800s. Formal, ornate language, 'my dearest', quill-and-ink energy.",
+    "goofy": "Make it goofy and silly — absurd humor, weird tangents, the kind of letter that's so dumb it's endearing.",
+    "sacrilegious": "Make it sacrilegious — treat your love with irreverent, over-the-top religious metaphor. Playfully blasphemous.",
+    "trippy": "Make it trippy — surreal, dreamlike, stream-of-consciousness. Like a love letter written while floating through a kaleidoscope.",
+    "spaced out": "Make it spaced out — dreamy, wandering, like someone lost in thought about the person they love. Meandering but sincere."
+  },
+  "extras": {
+    "with all the trimmings": "Go all out — flowery language, dramatic declarations, every romantic cliché turned up to eleven. Leave nothing on the table.",
+    "without repeating yourself": "Don't repeat any phrases, sentiments, or structures. Every sentence should express a completely new thought or feeling.",
+    "in only 50 words": "The entire letter must be 50 words or fewer. Every word has to earn its place.",
+    "using pirate talk": "Write it in full pirate dialect — 'arr', 'me hearty', nautical metaphors, the whole swashbuckling voice.",
+    "sounding like Macho Man": "Write it in the voice of Macho Man Randy Savage — over-the-top intensity, 'OH YEAH', dramatic declarations, wrestling metaphors, everything cranked to maximum.",
+    "emphasizing his devotion": "Focus on unwavering devotion and commitment — make it about loyalty, showing up every day, choosing her over and over again.",
+    "as a poem": "Write the entire letter as a poem with intentional line breaks, rhythm, and rhyme or near-rhyme.",
+    "like it was 100 years old": "Write it as if it were written in the 1920s — the language, cultural references, and sensibility of a letter from a century ago.",
+    "as a movie script": "Format it as a movie script — scene descriptions, character actions in brackets, dialogue. A cinematic love letter.",
+    "with all vowels omitted": "Remove all vowels from every word. The letter should still be recognizable and readable, just with every a, e, i, o, and u stripped out.",
+    "using l33tspeak": "Write it in l33tspeak — replace letters with numbers and symbols (e.g., 3 for e, 4 for a, 0 for o). Internet circa 2003 energy.",
+    "as an apology": "Frame the letter as an apology — Travis is sorry (for what, who knows) and is making it up to her with this heartfelt letter.",
+    "referencing Taylor Swift": "Weave in Taylor Swift references — song titles, lyrics, album eras, Swiftie energy. She'll know every reference."
+  }
+}

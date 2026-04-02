@@ -1,0 +1,20 @@
+[project]
+name = "endless-love-letters"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic",
+    "bs4",
+    "flask",
+    "flask-session2",
+    "gunicorn",
+    "lxml",
+    "pymysql",
+    "python-dotenv",
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "djlint",
+]

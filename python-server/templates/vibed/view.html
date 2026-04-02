@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Generate love letters from Travis to Abby"
+    />
+    <meta name="keywords" content="love loveletters travis abby genai" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Infinite Love Letters</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/petite-vue?module';
+
+      createApp({
+        $delimiters: ['${', '}'],
+        favoriteId: null,
+        adj: null,
+        extra: null,
+        adjectives: {{ adjectives | tojson }},
+        extras: {{ extras | tojson }},
+
+        async toggleFavorite() {
+          if (!!this.favoriteId) {
+            return this.removeFavorite();
+          } else {
+            return this.addFavorite();
+          }
+        },
+
+        async addFavorite() {
+          const content = document.getElementById('letter').innerText;
+          const response = await fetch('/api/favorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ letter: content }),
+          });
+          const data = await response.json();
+          this.favoriteId = data.id;
+        },
+
+        async removeFavorite() {
+          await fetch('/api/unfavorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: this.favoriteId }),
+          });
+          this.favoriteId = null;
+        },
+
+        mounted() {
+          const urlParams = new URLSearchParams(window.location.search);
+          this.adj = urlParams.get('adj');
+          this.extra = urlParams.get('extra');
+        },
+      }).mount();
+    </script>
+  </head>
+  <body>
+    <div class="container visible index" v-cloak v-scope @vue:mounted="mounted">
+      <div class="inner-container">
+        <div class="prompt">
+          <form>
+            Write me a
+            <select name="adj">
+              <option
+                v-for="adjective in adjectives"
+                :selected="adjective == adj"
+              >
+                ${ adjective }
+              </option>
+            </select>
+            love letter from Travis,
+            <select name="extra">
+              <option v-for="ex in extras" :selected="ex == extra">
+                ${ ex }
+              </option></select
+            >, that he can send to his wife Abby.
+            <button>Write it!</button>
+          </form>
+        </div>
+        <div class="frame">
+          <span
+            class="heart"
+            :class="{selected: !!favoriteId}"
+            @click="toggleFavorite()"
+          ></span>
+          <div id="letter" class="letter"><pre>{{ letter }}</pre></div>
+          <div class="favlink"><a href="/vibed/favorites">favorites</a></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

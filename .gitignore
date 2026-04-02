@@ -7,3 +7,4 @@ search_documents.jsonl
 SECRETS.dev
 SECRETS
 .env
+modifiers.json

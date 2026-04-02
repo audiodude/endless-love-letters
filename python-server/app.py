@@ -7,6 +7,7 @@ from flask_session import Session
 
 import db
 from generate import generate
+from generate_vibed import generate_vibed
 from get_secrets import secret
 
 app = flask.Flask(__name__)
@@ -40,22 +41,29 @@ def index():
 
 @app.route('/<version>')
 def view(version):
-  if version not in ('v1', 'v2'):
+  if version not in ('v1', 'v2', 'vibed'):
     flask.abort(404)
+  adj = flask.request.args.get('adj')
+  extra = flask.request.args.get('extra')
+  if version == 'vibed':
+    from generate_vibed import MODIFIERS
+    letter = generate_vibed(adj=adj, extra=extra)
+    return flask.render_template('vibed/view.html', letter=letter,
+                                 adjectives=list(MODIFIERS['adjectives'].keys()),
+                                 extras=list(MODIFIERS['extras'].keys()))
   if version == 'v2':
-    adj = flask.request.args.get('adj')
-    extra = flask.request.args.get('extra')
     letter = generate(adj=adj, extra=extra)
-    return flask.render_template(f'v2/view.html', letter=letter)
+    return flask.render_template('v2/view.html', letter=letter)
 
-  return flask.render_template(f'v1/view.html')
+  return flask.render_template('v1/view.html')
 
 
 @app.route('/<version>/favorites')
 def favorites(version):
-  if version not in ('v1', 'v2'):
+  if version not in ('v1', 'v2', 'vibed'):
     flask.abort(404)
-  return flask.render_template(f'{version}/favorites.html')
+  template = 'v2/favorites.html' if version == 'vibed' else f'{version}/favorites.html'
+  return flask.render_template(template)
 
 
 @app.route('/api/generate')
