@@ -9,7 +9,6 @@ dependencies = [
     "flask-session2",
     "gunicorn",
     "lxml",
-    "pymysql",
     "python-dotenv",
     "requests",
 ]
