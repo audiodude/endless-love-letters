@@ -41,7 +41,8 @@ def view(version):
   extra = flask.request.args.get('extra')
   if version == 'vibed':
     from generate_vibed import MODIFIERS
-    letter = generate_vibed(adj=adj, extra=extra)
+    retro = flask.request.args.get('retro') == '1'
+    letter = generate_vibed(adj=adj, extra=extra, retro=retro)
     return flask.render_template('vibed/view.html', letter=letter,
                                  adjectives=list(MODIFIERS['adjectives'].keys()),
                                  extras=list(MODIFIERS['extras'].keys()))

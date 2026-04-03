@@ -18,6 +18,7 @@
         favoriteId: null,
         adj: null,
         extra: null,
+        retro: false,
         adjectives: {{ adjectives | tojson }},
         extras: {{ extras | tojson }},
 
@@ -53,6 +54,7 @@
           const urlParams = new URLSearchParams(window.location.search);
           this.adj = urlParams.get('adj');
           this.extra = urlParams.get('extra');
+          this.retro = urlParams.get('retro') === '1';
         },
       }).mount();
     </script>
@@ -62,22 +64,37 @@
       <div class="inner-container">
         <div class="prompt">
           <form>
-            Write me a
-            <select name="adj">
-              <option
-                v-for="adjective in adjectives"
-                :selected="adjective == adj"
-              >
-                ${ adjective }
-              </option>
-            </select>
-            love letter from Travis,
-            <select name="extra">
-              <option v-for="ex in extras" :selected="ex == extra">
-                ${ ex }
-              </option></select
-            >, that he can send to his wife Abby.
-            <button>Write it!</button>
+            <div>
+              Write me a
+              <select name="adj">
+                <option
+                  v-for="adjective in adjectives"
+                  :selected="adjective == adj"
+                >
+                  ${ adjective }
+                </option>
+              </select>
+              love letter from Travis,
+              <select name="extra">
+                <option v-for="ex in extras" :selected="ex == extra">
+                  ${ ex }
+                </option></select
+              >,
+            </div>
+            <div>
+              <label class="retro-label"
+                ><input
+                  type="checkbox"
+                  name="retro"
+                  value="1"
+                  :checked="retro"
+                />
+                retro
+              </label>
+            </div>
+            <div>
+              <button>Write it!</button>
+            </div>
           </form>
         </div>
         <div class="frame">

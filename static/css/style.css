@@ -135,6 +135,10 @@ button {
   font-size: 1.5rem;
 }
 
+.retro-label {
+  font-size: 1rem;
+}
+
 .password-form {
   margin-left: 1rem;
 }
