@@ -53,12 +53,14 @@ def view(version):
   return flask.render_template('v1/view.html')
 
 
+@app.route('/favorites')
+def favorites():
+  return flask.render_template('v2/favorites.html')
+
+
 @app.route('/<version>/favorites')
-def favorites(version):
-  if version not in ('v1', 'v2', 'vibed'):
-    flask.abort(404)
-  template = 'v2/favorites.html' if version == 'vibed' else f'{version}/favorites.html'
-  return flask.render_template(template)
+def favorites_legacy(version):
+  return flask.redirect('/favorites')
 
 
 @app.route('/api/generate')

@@ -1,5 +1,3 @@
-const COOKIE_PATH = ';path=/v1';
-
 async function loadData() {
   if (data.length === 0) {
     const response = await fetch('/static/data/letters.json');
@@ -8,67 +6,80 @@ async function loadData() {
 }
 
 let data = [];
+let favoriteMap = {}; // letterId -> server favorite id
+
+async function loadFavorites() {
+  const response = await fetch('/api/favorites');
+  const result = await response.json();
+  return result.favorites;
+}
 
 async function fillLetter() {
   await loadData();
-  id = Math.floor(Math.random() * data.length);
+  const id = Math.floor(Math.random() * data.length);
   const contents = data[id];
 
-  container = document.getElementsByClassName('container')[0];
-
-  letterEl = document.getElementsByClassName('letter')[0];
+  const container = document.getElementsByClassName('container')[0];
+  const letterEl = document.getElementsByClassName('letter')[0];
   letterEl.innerText = contents;
-  heartEl = document.getElementsByClassName('heart')[0];
-  heartEl.data = { letterId: id };
 
-  curIds = getFavoriteIds() || [];
-  if (curIds.indexOf(id) !== -1) {
-    heartEl.classList.add('selected');
-  }
+  const heartEl = document.getElementsByClassName('heart')[0];
+  heartEl.dataset.letterId = id;
+
+  // Check if this letter is already favorited
+  const favorites = await loadFavorites();
+  favorites.forEach(fav => {
+    if (fav.content === contents) {
+      heartEl.classList.add('selected');
+      favoriteMap[id] = fav.id;
+    }
+  });
+
   container.classList.add('visible');
 }
 
-function getFavoriteIds() {
-  allCookies = document.cookie;
-  match = allCookies.match(/favorites=(\[[^;]+\]);?/);
-  if (match) {
-    return JSON.parse(match[1]);
-  }
+async function addFavorite(letterId) {
+  const contents = data[letterId];
+  const response = await fetch('/api/favorite', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ letter: contents }),
+  });
+  const result = await response.json();
+  favoriteMap[letterId] = result.id;
 }
 
-function addFavorite(id) {
-  const curIds = getFavoriteIds() || [];
-  curIds.push(id);
-  document.cookie = 'favorites=' + JSON.stringify(curIds) + COOKIE_PATH;
-}
-
-function removeFavorite(id) {
-  const curIds = getFavoriteIds() || [];
-  idx = curIds.indexOf(id);
-  if (idx !== -1) {
-    curIds.splice(idx, 1);
-    document.cookie = 'favorites=' + JSON.stringify(curIds) + COOKIE_PATH;
+async function removeFavorite(letterId) {
+  const favId = favoriteMap[letterId];
+  if (favId) {
+    await fetch('/api/unfavorite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: favId }),
+    });
+    delete favoriteMap[letterId];
   }
 }
 
 async function printFavorites() {
-  await loadData();
   const containerEl = document.getElementsByClassName('container')[0];
-  const curIds = getFavoriteIds() || [];
-  for (let i = 0; i < curIds.length; i++) {
+  const favorites = await loadFavorites();
+
+  for (const fav of favorites) {
     const frame = document.createElement('div');
     frame.classList.add('frame', 'v1');
     const heart = document.createElement('span');
     heart.classList.add('heart', 'selected');
-    heart.data = { letterId: curIds[i] };
+    heart.dataset.favId = fav.id;
     const letter = document.createElement('div');
     letter.classList.add('letter');
-    letter.innerText = data[curIds[i]];
+    letter.innerText = fav.content;
     frame.appendChild(heart);
     frame.appendChild(letter);
     containerEl.append(frame);
   }
-  if (curIds.length == 0) {
+
+  if (favorites.length === 0) {
     const frame = document.createElement('div');
     frame.classList.add('frame', 'v1');
     const letter = document.createElement('div');
@@ -87,12 +98,23 @@ async function addHeartListeners() {
   const hearts = document.getElementsByClassName('heart');
   for (let i = 0; i < hearts.length; i++) {
     const heart = hearts[i];
-    heart.addEventListener('click', function () {
+    heart.addEventListener('click', async function () {
       this.classList.toggle('selected');
       if (this.classList.contains('selected')) {
-        addFavorite(this.data.letterId);
+        if (this.dataset.letterId !== undefined) {
+          await addFavorite(parseInt(this.dataset.letterId));
+        }
       } else {
-        removeFavorite(this.data.letterId);
+        if (this.dataset.letterId !== undefined) {
+          await removeFavorite(parseInt(this.dataset.letterId));
+        } else if (this.dataset.favId) {
+          await fetch('/api/unfavorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(this.dataset.favId) }),
+          });
+          this.closest('.frame').remove();
+        }
       }
     });
   }
