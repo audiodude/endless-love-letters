@@ -1,17 +1,19 @@
 import json
+import os
 import random
 
 import anthropic
 
 from get_secrets import secret
-from parse_emails import get_emails
+from letters import ALL_LETTERS, DATA_DIR
 
 ANTHROPIC_API_KEY = secret('ANTHROPIC_API_KEY')
 
-# Parse all letters from the mbox at import time
-ALL_LETTERS = [text for text, ids in get_emails()]
+modifiers_path = os.path.join(DATA_DIR, 'modifiers.json')
+if not os.path.exists(modifiers_path):
+    modifiers_path = 'modifiers.json.example'
 
-with open('modifiers.json') as f:
+with open(modifiers_path) as f:
     MODIFIERS = json.load(f)
 
 SAMPLE_SIZE = 100

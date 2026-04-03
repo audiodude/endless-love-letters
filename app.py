@@ -9,17 +9,12 @@ import db
 from generate import generate
 from generate_vibed import generate_vibed
 from get_secrets import secret
+from letters import DATABASE
 
 app = flask.Flask(__name__)
 Session(app)
 app.config['SECRET_KEY'] = secret('FLASK_SECRET_KEY')
 app.config['WEB_PASSWORD'] = secret('WEB_PASSWORD')
-
-DATABASE = {}
-with open('search_documents.jsonl') as f:
-  search_documents = [json.loads(doc) for doc in f.read().splitlines()]
-  for doc in search_documents:
-    DATABASE[doc['id']] = doc['letter']
 
 
 def require_auth(fn):

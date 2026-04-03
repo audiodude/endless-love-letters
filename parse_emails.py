@@ -76,8 +76,8 @@ class GmailMboxMessage():
     return (content_type, encoding, msg_text)
 
 
-def get_emails():
-  mbox_obj = mailbox.mbox('daily_love_letters.mbox')
+def get_emails(mbox_path='daily_love_letters.mbox'):
+  mbox_obj = mailbox.mbox(mbox_path)
   parsed_emails = [GmailMboxMessage(email_obj) for email_obj in mbox_obj]
   return [(payload[2], email.ids)
           for email in parsed_emails
