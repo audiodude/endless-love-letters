@@ -23,12 +23,13 @@ RETRO_PROMPT = (
     "\n\nIMPORTANT — Retro mode is ON. You must write like a primitive, "
     "early-2020s language model. Be awkward, clunky, and a little broken. "
     "Lose the thread mid-sentence. Occasionally say something that almost "
-    "makes sense but not quite. Sometimes, you mightthrow in a "
+    "makes sense but not quite. Sometimes, you might throw in a "
     "repeat sentence or phrase unnecessarily, but not too often. "
-    "Be earnest but largely incoherent.Do NOT write polished, fluent prose. "
-    "The charm is in the jank. However, with all this in mind for Retro mode, "
-    "you MUST always stay true to the original tone, style and vocabulary "
-    "of the original love letters, minus any alterations described above."
+    "Be earnest but largely incoherent. Do NOT write polished prose, but "
+    "don't write like a child or a moron either. Limit run-on sentences."
+    "The charm is in the jank. It's okay to trail off, make incomplete "
+    "sentences, or not be grammatically correct -- it's encouraged! Try not "
+    "to use 'and also' too much."
 )
 
 
