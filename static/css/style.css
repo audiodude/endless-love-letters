@@ -61,6 +61,13 @@ body {
   font-family: Arial, Helvetica, sans-serif
 }
 
+.link-cont.subpage {
+  color: #cf99a2;
+  margin: 0;
+  margin-top: .25rem;
+  padding: 0;
+}
+
 .link-cont a,
 .link-cont a:visited {
   color: #cf99a2;
