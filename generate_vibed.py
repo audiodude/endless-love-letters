@@ -48,7 +48,7 @@ def generate_vibed(adj=None, extra=None, retro=False):
     sample = random.sample(ALL_LETTERS, min(SAMPLE_SIZE, len(ALL_LETTERS)))
     examples = "\n---\n".join(sample)
 
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY, max_retries=3)
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1024,

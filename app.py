@@ -2,6 +2,7 @@ from functools import wraps
 import json
 import os
 
+import anthropic
 import flask
 from flask_session import Session
 
@@ -42,7 +43,12 @@ def view(version):
   if version == 'vibed':
     from generate_vibed import MODIFIERS
     retro = flask.request.args.get('retro') == '1'
-    letter = generate_vibed(adj=adj, extra=extra, retro=retro)
+    try:
+      letter = generate_vibed(adj=adj, extra=extra, retro=retro)
+    except anthropic.APIStatusError:
+      return flask.render_template('vibed/error.html',
+                                   adjectives=list(MODIFIERS['adjectives'].keys()),
+                                   extras=list(MODIFIERS['extras'].keys())), 503
     return flask.render_template('vibed/view.html', letter=letter,
                                  adjectives=list(MODIFIERS['adjectives'].keys()),
                                  extras=list(MODIFIERS['extras'].keys()))

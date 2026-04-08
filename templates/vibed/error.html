@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Infinite Love Letters</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/petite-vue?module';
+
+      createApp({
+        $delimiters: ['${', '}'],
+        adj: null,
+        extra: null,
+        retro: false,
+        adjectives: {{ adjectives | tojson }},
+        extras: {{ extras | tojson }},
+
+        mounted() {
+          const urlParams = new URLSearchParams(window.location.search);
+          this.adj = urlParams.get('adj');
+          this.extra = urlParams.get('extra');
+          this.retro = urlParams.get('retro') === '1';
+        },
+      }).mount();
+    </script>
+  </head>
+  <body>
+    <div class="container visible index" v-cloak v-scope @vue:mounted="mounted">
+      <div class="inner-container">
+        <div class="prompt">
+          <form>
+            <div>
+              Write me a
+              <select name="adj">
+                <option
+                  v-for="adjective in adjectives"
+                  :selected="adjective == adj"
+                >
+                  ${ adjective }
+                </option>
+              </select>
+              love letter from Travis,
+              <select name="extra">
+                <option v-for="ex in extras" :selected="ex == extra">
+                  ${ ex }
+                </option></select
+              >,
+            </div>
+            <div>
+              <label class="retro-label"
+                ><input
+                  type="checkbox"
+                  name="retro"
+                  value="1"
+                  :checked="retro"
+                />
+                retro
+              </label>
+            </div>
+            <div>
+              <button>Write it!</button>
+            </div>
+          </form>
+        </div>
+        <div class="frame">
+          <div class="letter">
+            <pre>The love letter writer is taking a short break — too many letters at once! Please try again in a moment.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
