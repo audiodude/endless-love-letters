@@ -8,5 +8,5 @@ RUN uv sync --frozen --no-dev --no-install-project
 
 COPY . .
 
-ENV GUNICORN_CMD_ARGS="--bind=0.0.0.0:8080 --log-file=-"
+ENV GUNICORN_CMD_ARGS="--bind=0.0.0.0:8080 --log-file=- --timeout=120"
 CMD ["uv", "run", "--no-sync", "gunicorn", "app:app"]
